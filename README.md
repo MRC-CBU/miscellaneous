@@ -1,4 +1,4 @@
-# Miscellaneous neuroimaging support scripts
+# Miscellaneous support scripts and tutorials
 
 ## [Power for Interactions](https://github.com/MRC-CBU/miscellaneous/tree/master/power-for-interactions)
 
