@@ -8,7 +8,7 @@
 There is a common perception that it is difficult to detect interactions (moderations) in multiple linear regression (MLR). There are several possible reasons for this, but a priori, the power for detecting an interaction is often equivalent to that for detecting a main effect, except in a few special cases, as demonstrated in the notebook and R Markdown code.
 
 
-## [Relating Age, Brain and Cognition](https://github.com/MRC-CBU/miscellaneous/tree/master/relating-age-brain-cognition)
+## [Relating Age, Brain and Cognition](https://github.com/MRC-CBU/miscellaneous/tree/master/Relating-Age-Brain-and-Cognition)
 
 **A primer on relating Age, Brain and Cognition: As easy as “ABC”.**
 
