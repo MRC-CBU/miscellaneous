@@ -25,11 +25,11 @@ This paper [McClelland & Judd 1993](https://www.researchgate.net/publication/147
 
 Before simulating, here are some other possible reasons for a difficulty in detecting an interaction, which are not so relevant to discussion here:
 
-1. It may be an empirical fact that interactions between the types of variables measured in many studies have a smaller effect size than the main effect of those variables. Or there may be theoretical reasons why the interaction could only be ordinal rather than disordinal (cross-over) (see [Lakens Blog](http://daniellakens.blogspot.com/2020/03/effect-sizes-and-power-for-interactions.html), in which case the effect size might be half that for the main effects. Here however we consider the case when there is no such empirical or a priori knowledge, i.e, when effect sizes for X, Z and XZ are equal (ie ``Bx=Bz=Bxz=1``). 
+1. It may be an empirical fact that interactions between the types of variables measured in many studies have a smaller effect size than the main effect of those variables. Or there may be theoretical reasons why the interaction could only be ordinal rather than disordinal (cross-over) (see [Lakens Blog](http://daniellakens.blogspot.com/2020/03/effect-sizes-and-power-for-interactions.html)), in which case the effect size might be half that for the main effects. Here however we consider the case when there is no such empirical or a priori knowledge, i.e, when effect sizes for X, Z and XZ are equal (ie ``Bx=Bz=Bxz=1``). 
 
 2. The addition of the interaction term to the MLR model eats an additional degree of freedom (df). This is true, but it is strange to not include it, unless we have a priori reason not to expect an interaction, and in any case, its effect on statistical power is negligible (compared to tests of main effects) if we have enough data, as here.
 
-3. It is important to mean-correct X and Z before multiplying them in equation above, otherwise the interaction term XZ will be more correlated with X and Z (if one or both have non-zero mean), i.e, the interaction and main effects will be confounded. (Note interaction terms are orthogonal to main effects in experimental studies, by design).
+3. It is important to mean-correct X and Z before multiplying them in equation above, otherwise the interaction term XZ will be more correlated with X and Z (if one or both have non-zero mean), i.e, the interaction and main effects will be confounded. (Note interaction terms are orthogonal to main effects in experimental studies, by design; note also that this is a type of "orthogonalisation" that I question below for field studies, but in this case, we very rarely care about the mean of any regressor in a MLR).
 
 4. Sometimes people think they have low power to detect "interactions" because they have fewer values per cell when they break down the data according to the specific levels of two or more factors. However, this really refers to the power to detect the "simple effects" on subsets of the data, for example to interpret what is driving an overall interaction; here we only consider the omnibus interaction involving all the data.
 
@@ -321,9 +321,9 @@ The interaction is now more difficult to detect than the main effects because th
 
 ### Sequential testing
 
-In a final example where the power for detecting an interaction is reduced, we will generate cases where the interaction term is correlated with one or both main effects (even after Z-scoring), and where one decides to partition shared variance "sequentially" to each term in the MLR, giving priority to main effects over interactions. This is a situation where the order of regressors matters in a MLR, and arises when interactions appear to "the right of" main effects in the ``lm`` equation. In the ``pow`` function, sequential testing is implemented by using the default ``anova`` function on the lm fit, which uses type I sum of squares, rather than the usual ``summary`` function.
+In a final example where the power for detecting an interaction is reduced, we will generate cases where the interaction term is correlated with one or both main effects (even after mean-correction), and where one decides to partition shared variance "sequentially" to each term in the MLR, giving priority to main effects over interactions. This is a situation where the order of regressors matters in a MLR, and arises when interactions appear to "the right of" main effects in the ``lm`` equation. In the ``pow`` function, sequential testing is implemented by using the default ``anova`` function on the lm fit, which uses type I sum of squares, rather than the usual ``summary`` function.
 
-We will also take this opportunity to illustrate a final option of passing user-specified regressors directly to ``pow`` via the ``arg$R`` parameter. Here we will generate a uniform distribution for X, and make Z a squared version of X (before mean-correcting X). Both will be standardised before entering the MLR, to ensure their range is equivalent, but the lack of mean-correction of X prior to multiplication with Z ensures that X is highly correlated with Z, and also that the product XZ is correlated with both main effects, as can be seen here:
+We will also take this opportunity to illustrate a final option of passing user-specified regressors directly to ``pow`` via the ``arg$R`` parameter. Here we will generate a uniform distribution for X, and make Z a squared version of X (before mean-correcting X). Both will be standardised before entering the MLR, to ensure their range is equivalent, but the lack of mean-correction of X prior to its squaring ensures that X is highly correlated with Z. The product XZ is then also correlated with both main effects, as can be seen here:
 
 ```{r sequential distributions, warnings=FALSE}
 arg = list(nsim = nsim, nexp = nexp, nsub = nsub, Beta = Beta, nsd = nsd, expt = 0)
@@ -345,7 +345,7 @@ arg$seqTest = 1;
 plot_bar(pow(arg)) 
 ```
 
-Nonetheless, there must always be an a priori reason to orthogonalise one regressor with respect to others in MLR (i.e, effectively assigning the shared variance to the other regressors). One could argue that main effects always have priority over interactions, but I would argue that this is again domain-specific knowledge, and in principle interactions are as interesting as main effects.
+Nonetheless, there must always be an a priori reason to orthogonalise one regressor with respect to others in MLR (i.e, effectively assigning the shared variance to the other regressors). One could argue that main effects always have priority over interactions, like [Cohen, 1978](https://psycnet.apa.org/record/1979-25147-001), but more generally, one could argue that this depends on domain-specific knowledge, and in principle interactions are as interesting as main effects.
 
 ## Conclusion
 
